@@ -31,9 +31,19 @@ func Reduce[Element any, Accumulator any](elements []Element, fun func(Element, 
 }
 
 // Map returns a slice where each element is the result of invoking fun on each corresponding element of slice.
-func Map[Element any](elements []Element, fun func(element Element) Element) []Element {
+func Map[Element any](elements []Element, fun func(Element) Element) []Element {
 	return Reduce(elements, func(element Element, accumulator []Element) []Element {
 		return append(accumulator, fun(element))
+	}, make([]Element, 0))
+}
+
+// Filter returns only those elements in the slice for which fun returns true.
+func Filter[Element any](elements []Element, fun func(element Element) bool) []Element {
+	return Reduce(elements, func(elememt Element, accumulator []Element) []Element {
+		if fun(elememt) {
+			return append(accumulator, elememt)
+		}
+		return accumulator
 	}, make([]Element, 0))
 }
 

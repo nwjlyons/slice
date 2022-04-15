@@ -35,6 +35,14 @@ func TestMap(t *testing.T) {
 	assert(t, reflect.DeepEqual(got, expected), true)
 }
 
+func TestFilter(t *testing.T) {
+	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	got := slice.Filter(numbers, func(number int) bool {
+		return number%2 == 0
+	})
+	assert(t, reflect.DeepEqual(got, []int{2, 4, 6, 8}), true)
+}
+
 func TestIsMember(t *testing.T) {
 	planets := []string{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"}
 	assert(t, slice.IsMember(planets, "Earth"), true)
