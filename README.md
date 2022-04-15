@@ -2,6 +2,21 @@
 
 Exploring generics in Go.
 
-### Hat Tip
+```go
+package main
 
-- Elixir's [Enum](https://hexdocs.pm/elixir/Enum.html) module. 
+import (
+	"fmt"
+	"github.com/nwjlyons/slice"
+)
+
+func main() {
+	max := slice.Max([]int{6, 4, 8, 2, 1, 9, 4, 7, 5})
+	fmt.Printf("Maximum: %v\n", max)
+}
+```
+
+```shell
+go run main.go
+Maximum: 9
+```
