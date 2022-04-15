@@ -30,6 +30,13 @@ func Reduce[Element any, Accumulator any](elements []Element, fun func(Element, 
 	}, accumulator)
 }
 
+// Map returns a slice where each element is the result of invoking fun on each corresponding element of slice.
+func Map[Element any](elements []Element, fun func(element Element) Element) []Element {
+	return Reduce(elements, func(element Element, accumulator []Element) []Element {
+		return append(accumulator, fun(element))
+	}, make([]Element, 0))
+}
+
 // IsMember checks if element exists within the slice.
 func IsMember[Element comparable](elements []Element, member Element) bool {
 	return ReduceWhile(elements, func(element Element, accumulator bool) (Reduction, bool) {

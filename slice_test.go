@@ -1,6 +1,7 @@
 package slice_test
 
 import (
+	"reflect"
 	"slice"
 	"testing"
 )
@@ -23,6 +24,15 @@ func TestReduce(t *testing.T) {
 	}, "")
 	expected := "MercuryVenusEarthMarsJupiterSaturnUranusNeptune"
 	assert(t, got, expected)
+}
+
+func TestMap(t *testing.T) {
+	trafficLights := []string{"red", "amber", "green"}
+	got := slice.Map(trafficLights, func(light string) string {
+		return light + "!"
+	})
+	expected := []string{"red!", "amber!", "green!"}
+	assert(t, reflect.DeepEqual(got, expected), true)
 }
 
 func TestIsMember(t *testing.T) {
