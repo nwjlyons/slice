@@ -30,6 +30,16 @@ func Reduce[Element any, Accumulator any](elements []Element, fun func(Element, 
 	}, accumulator)
 }
 
+// IsMember checks if element exists within the slice.
+func IsMember[Element comparable](elements []Element, member Element) bool {
+	return ReduceWhile(elements, func(element Element, accumulator bool) (Reduction, bool) {
+		if element == member {
+			return Halt, true
+		}
+		return Cont, false
+	}, false)
+}
+
 // Max returns the maximal element in the slice.
 func Max[Element constraints.Ordered](elements []Element) Element {
 	return Reduce(elements, func(element Element, max Element) Element {

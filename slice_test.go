@@ -25,6 +25,12 @@ func TestReduce(t *testing.T) {
 	assert(t, got, expected)
 }
 
+func TestIsMember(t *testing.T) {
+	planets := []string{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"}
+	assert(t, slice.IsMember(planets, "Earth"), true)
+	assert(t, slice.IsMember(planets, "Pluto"), false)
+}
+
 func TestMax(t *testing.T) {
 	numbers := []int{6, 4, 8, 2, 1, 9, 4, 7, 5}
 	assert(t, slice.Max(numbers), 9)
