@@ -5,6 +5,16 @@ import (
 	"testing"
 )
 
+func TestReduceWhile(t *testing.T) {
+	numbers := []int{40, 2, 8}
+	slice.ReduceWhile(numbers, func(number int, total int) (slice.Reduction, int) {
+		if total <= 42 {
+			return slice.Halt, total
+		}
+		return slice.Cont, total + number
+	}, 0)
+}
+
 func TestReduce(t *testing.T) {
 	planets := []string{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"}
 	got := slice.Reduce(planets, func(planet string, acc string) string {

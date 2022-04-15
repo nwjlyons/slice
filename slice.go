@@ -2,6 +2,23 @@ package slice
 
 import "golang.org/x/exp/constraints"
 
+type Reduction int
+
+const (
+	Cont Reduction = iota
+	Halt
+)
+
+func ReduceWhile[Element any, Accumulator any](elements []Element, fun func(Element, Accumulator) (Reduction, Accumulator), accumulator Accumulator) Accumulator {
+	for _, element := range elements {
+		reduction, accumulator := fun(element, accumulator)
+		if reduction == Halt {
+			return accumulator
+		}
+	}
+	return accumulator
+}
+
 // Reduce invokes fun for each element in the slice with the accumulator.
 func Reduce[Element any, Accumulator any](elements []Element, fun func(Element, Accumulator) Accumulator, accumulator Accumulator) Accumulator {
 	for _, element := range elements {
