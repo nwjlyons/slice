@@ -11,6 +11,10 @@ func TestReduce(t *testing.T) {
 		return acc + planet
 	}, "")
 	expected := "MercuryVenusEarthMarsJupiterSaturnUranusNeptune"
+	assert(t, got, expected)
+}
+
+func assert[T comparable](t *testing.T, got T, expected T) {
 	if got != expected {
 		t.Errorf("got:\n%v\nexpected:\n%v\n", got, expected)
 	}
