@@ -7,12 +7,13 @@ import (
 
 func TestReduceWhile(t *testing.T) {
 	numbers := []int{40, 2, 8}
-	slice.ReduceWhile(numbers, func(number int, total int) (slice.Reduction, int) {
-		if total <= 42 {
+	got := slice.ReduceWhile(numbers, func(number int, total int) (slice.Reduction, int) {
+		if total >= 42 {
 			return slice.Halt, total
 		}
-		return slice.Cont, total + number
+		return slice.Cont, number + total
 	}, 0)
+	assert(t, got, 42)
 }
 
 func TestReduce(t *testing.T) {

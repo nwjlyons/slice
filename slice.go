@@ -1,6 +1,8 @@
 package slice
 
-import "golang.org/x/exp/constraints"
+import (
+	"golang.org/x/exp/constraints"
+)
 
 type Reduction int
 
@@ -9,9 +11,11 @@ const (
 	Halt
 )
 
+// ReduceWhile reduces slice until fun returns Halt.
 func ReduceWhile[Element any, Accumulator any](elements []Element, fun func(Element, Accumulator) (Reduction, Accumulator), accumulator Accumulator) Accumulator {
+	reduction := Cont
 	for _, element := range elements {
-		reduction, accumulator := fun(element, accumulator)
+		reduction, accumulator = fun(element, accumulator)
 		if reduction == Halt {
 			return accumulator
 		}
@@ -21,10 +25,9 @@ func ReduceWhile[Element any, Accumulator any](elements []Element, fun func(Elem
 
 // Reduce invokes fun for each element in the slice with the accumulator.
 func Reduce[Element any, Accumulator any](elements []Element, fun func(Element, Accumulator) Accumulator, accumulator Accumulator) Accumulator {
-	for _, element := range elements {
-		accumulator = fun(element, accumulator)
-	}
-	return accumulator
+	return ReduceWhile(elements, func(element Element, accumulator Accumulator) (Reduction, Accumulator) {
+		return Cont, fun(element, accumulator)
+	}, accumulator)
 }
 
 // Max returns the maximal element in the slice.
