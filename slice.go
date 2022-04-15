@@ -47,6 +47,16 @@ func Filter[Element any](elements []Element, fun func(element Element) bool) []E
 	}, make([]Element, 0))
 }
 
+// Reject returns elements excluding those for which the function fun returns true.
+func Reject[Element any](elements []Element, fun func(element Element) bool) []Element {
+	return Reduce(elements, func(elememt Element, accumulator []Element) []Element {
+		if !fun(elememt) {
+			return append(accumulator, elememt)
+		}
+		return accumulator
+	}, make([]Element, 0))
+}
+
 // IsMember checks if element exists within the slice.
 func IsMember[Element comparable](elements []Element, member Element) bool {
 	return ReduceWhile(elements, func(element Element, accumulator bool) (Reduction, bool) {

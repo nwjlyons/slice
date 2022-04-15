@@ -43,6 +43,14 @@ func TestFilter(t *testing.T) {
 	assert(t, reflect.DeepEqual(got, []int{2, 4, 6, 8}), true)
 }
 
+func TestReject(t *testing.T) {
+	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	got := slice.Reject(numbers, func(number int) bool {
+		return number%2 == 0
+	})
+	assert(t, reflect.DeepEqual(got, []int{1, 3, 5, 7, 9}), true)
+}
+
 func TestIsMember(t *testing.T) {
 	planets := []string{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"}
 	assert(t, slice.IsMember(planets, "Earth"), true)
