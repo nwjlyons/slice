@@ -79,12 +79,9 @@ func Max[Element constraints.Ordered](elements []Element) Element {
 
 // Min returns the minimum element in the slice.
 func Min[Element constraints.Ordered](elements []Element) Element {
-	return Reduce(elements, func(element Element, min Element) Element {
-		if element < min {
-			min = element
-		}
-		return min
-	}, elements[0])
+	return MinBy(elements, func(element Element) Element {
+		return element
+	})
 }
 
 // MinBy returns the minimum element in the slice according to fun.
