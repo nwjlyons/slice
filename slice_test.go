@@ -109,11 +109,11 @@ func TestMinMaxBy(t *testing.T) {
 	jupiter := planet{Name: "Jupiter", Radius: 69_911_000}
 
 	planets := []planet{neptune, mars, jupiter}
-	minPlanet, maxPlanent := slice.MinMaxBy(planets, func(planet planet) int {
+	minPlanet, maxPlanet := slice.MinMaxBy(planets, func(planet planet) int {
 		return planet.Radius
 	})
 	assert(t, minPlanet.Name, mars.Name)
-	assert(t, maxPlanent.Name, jupiter.Name)
+	assert(t, maxPlanet.Name, jupiter.Name)
 }
 
 func TestSum(t *testing.T) {
