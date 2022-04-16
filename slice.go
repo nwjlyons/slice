@@ -30,14 +30,14 @@ func Reduce[Element any, Accumulator any](elements []Element, fun func(Element, 
 	}, accumulator)
 }
 
-// Map returns a slice where each element is the result of invoking fun on each corresponding element of slice.
+// Map invokes fun on each element.
 func Map[Element any](elements []Element, fun func(Element) Element) []Element {
 	return Reduce(elements, func(element Element, accumulator []Element) []Element {
 		return append(accumulator, fun(element))
 	}, make([]Element, 0))
 }
 
-// Filter returns only those elements in the slice for which fun returns true.
+// Filter returns elements where fun returns true.
 func Filter[Element any](elements []Element, fun func(element Element) bool) []Element {
 	return Reduce(elements, func(elememt Element, accumulator []Element) []Element {
 		if fun(elememt) {
@@ -47,7 +47,7 @@ func Filter[Element any](elements []Element, fun func(element Element) bool) []E
 	}, make([]Element, 0))
 }
 
-// Reject returns elements excluding those for which the function fun returns true.
+// Reject returns elements excluding those where fun returns true.
 func Reject[Element any](elements []Element, fun func(element Element) bool) []Element {
 	return Reduce(elements, func(elememt Element, accumulator []Element) []Element {
 		if !fun(elememt) {
@@ -57,7 +57,7 @@ func Reject[Element any](elements []Element, fun func(element Element) bool) []E
 	}, make([]Element, 0))
 }
 
-// IsMember checks if element exists within the slice.
+// IsMember checks if element exists in the slice.
 func IsMember[Element comparable](elements []Element, member Element) bool {
 	return ReduceWhile(elements, func(element Element, accumulator bool) (Reduction, bool) {
 		if element == member {
@@ -67,7 +67,7 @@ func IsMember[Element comparable](elements []Element, member Element) bool {
 	}, false)
 }
 
-// Max returns the maximal element in the slice.
+// Max returns the maximum element in the slice.
 func Max[Element constraints.Ordered](elements []Element) Element {
 	return Reduce(elements, func(element Element, max Element) Element {
 		if element > max {
@@ -77,7 +77,7 @@ func Max[Element constraints.Ordered](elements []Element) Element {
 	}, elements[0])
 }
 
-// Min returns the minimal element in the slice.
+// Min returns the minimum element in the slice.
 func Min[Element constraints.Ordered](elements []Element) Element {
 	return Reduce(elements, func(element Element, min Element) Element {
 		if element < min {
@@ -107,14 +107,14 @@ func MinMax[Element constraints.Ordered](elements []Element) (Element, Element) 
 	return result.min, result.max
 }
 
-// Sum returns the sum of all elements
+// Sum returns the sum of all elements.
 func Sum[Element constraints.Ordered](elements []Element) Element {
 	return Reduce(elements[1:], func(element Element, accumulator Element) Element {
 		return element + accumulator
 	}, elements[0])
 }
 
-// Any returns true if fun returns true for at least one element in slice.
+// Any returns true if fun returns true for at least one element in the slice.
 func Any[Element any](elements []Element, fun func(element Element) bool) bool {
 	return Reduce(elements, func(element Element, accumulator bool) bool {
 		if fun(element) {
