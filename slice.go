@@ -69,8 +69,15 @@ func IsMember[Element comparable](elements []Element, member Element) bool {
 
 // Max returns the maximum element in the slice.
 func Max[Element constraints.Ordered](elements []Element) Element {
+	return MaxBy(elements, func(element Element) Element {
+		return element
+	})
+}
+
+// MaxBy returns the maximum element in the slice according to fun.
+func MaxBy[Element any, CompareBy constraints.Ordered](elements []Element, fun func(Element) CompareBy) Element {
 	return Reduce(elements, func(element Element, max Element) Element {
-		if element > max {
+		if fun(element) > fun(max) {
 			max = element
 		}
 		return max

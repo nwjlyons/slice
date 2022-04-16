@@ -62,6 +62,18 @@ func TestMax(t *testing.T) {
 	assert(t, slice.Max(numbers), 9)
 }
 
+func TestMaxBy(t *testing.T) {
+	mars := planet{Name: "Mars", Radius: 3_389_500}
+	jupiter := planet{Name: "Jupiter", Radius: 69_911_000}
+	neptune := planet{Name: "Neptune", Radius: 24_622_000}
+
+	planets := []planet{neptune, mars, jupiter}
+	maxPlanet := slice.MaxBy(planets, func(planet planet) int {
+		return planet.Radius
+	})
+	assert(t, maxPlanet.Name, jupiter.Name)
+}
+
 func TestMin(t *testing.T) {
 	numbers := []int{6, 4, 8, 2, 1, 9, 4, 7, 5}
 	assert(t, slice.Min(numbers), 1)
