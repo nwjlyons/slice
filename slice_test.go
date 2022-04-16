@@ -149,6 +149,19 @@ func TestAll(t *testing.T) {
 	assert(t, slice.All([]int{2, 4, 6, 8}, isEven), true)
 }
 
+func TestCount(t *testing.T) {
+	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	assert(t, slice.Count(numbers), 9)
+}
+
+func TestCountBy(t *testing.T) {
+	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	isEven := func(number int) bool {
+		return number%2 == 0
+	}
+	assert(t, slice.CountBy(numbers, isEven), 4)
+}
+
 func assert[T comparable](t *testing.T, got T, expected T) {
 	if got != expected {
 		t.Errorf("got:\n%v\nexpected:\n%v\n", got, expected)
