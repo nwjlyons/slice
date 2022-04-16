@@ -28,15 +28,15 @@ func All[Element any](elements []Element, fun func(Element) bool) bool {
 
 // Any returns true if fun returns true for at least one element in the slice.
 func Any[Element any](elements []Element, fun func(Element) bool) bool {
-	return Reduce(elements, func(element Element, accumulator bool) bool {
+	return ReduceWhile(elements, func(element Element, accumulator bool) (Reduction, bool) {
 		if fun(element) {
-			accumulator = true
+			return Halt, true
 		}
-		return accumulator
+		return Cont, false
 	}, false)
 }
 
-// Count counts the number of elements in slice.
+// Count counts the number of elements in the slice.
 func Count[Element any](elements []Element) int {
 	return CountBy(elements, func(element Element) bool {
 		return true
