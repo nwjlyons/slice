@@ -86,3 +86,23 @@ func Min[Element constraints.Ordered](elements []Element) Element {
 		return min
 	}, elements[0])
 }
+
+type minMax[Element constraints.Ordered] struct {
+	min Element
+	max Element
+}
+
+// MinMax returns the minimum and maximum element in the slice.
+func MinMax[Element constraints.Ordered](elements []Element) (Element, Element) {
+	result := Reduce(elements, func(element Element, accumulator minMax[Element]) minMax[Element] {
+		if element < accumulator.min {
+			accumulator.min = element
+		}
+		if element > accumulator.max {
+			accumulator.max = element
+		}
+		return accumulator
+	}, minMax[Element]{min: elements[0], max: elements[0]})
+
+	return result.min, result.max
+}
