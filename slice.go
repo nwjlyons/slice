@@ -106,3 +106,10 @@ func MinMax[Element constraints.Ordered](elements []Element) (Element, Element) 
 
 	return result.min, result.max
 }
+
+// Sum returns the sum of all elements
+func Sum[Element constraints.Ordered](elements []Element) Element {
+	return Reduce(elements[1:], func(element Element, accumulator Element) Element {
+		return element + accumulator
+	}, elements[0])
+}

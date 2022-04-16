@@ -74,6 +74,11 @@ func TestMinMax(t *testing.T) {
 	assert(t, max, 9)
 }
 
+func TestSum(t *testing.T) {
+	numbers := []int{6, 4, 8, 2, 1, 9, 4, 7, 5}
+	assert(t, slice.Sum(numbers), 46)
+}
+
 func assert[T comparable](t *testing.T, got T, expected T) {
 	if got != expected {
 		t.Errorf("got:\n%v\nexpected:\n%v\n", got, expected)
