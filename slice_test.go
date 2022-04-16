@@ -3,6 +3,7 @@ package slice_test
 import (
 	"reflect"
 	"slice"
+	"strings"
 	"testing"
 )
 
@@ -160,6 +161,20 @@ func TestCountBy(t *testing.T) {
 		return number%2 == 0
 	}
 	assert(t, slice.CountBy(numbers, isEven), 4)
+}
+
+func TestFrequencies(t *testing.T) {
+	frequencies := slice.Frequencies([]string{"aa", "aa", "bb", "cc"})
+	expected := map[string]int{"aa": 2, "bb": 1, "cc": 1}
+	assert(t, reflect.DeepEqual(frequencies, expected), true)
+}
+
+func TestFrequenciesBy(t *testing.T) {
+	frequencies := slice.FrequenciesBy([]string{"aa", "aA", "bb", "cc"}, func(element string) string {
+		return strings.ToLower(element)
+	})
+	expected := map[string]int{"aa": 2, "bb": 1, "cc": 1}
+	assert(t, reflect.DeepEqual(frequencies, expected), true)
 }
 
 func assert[T comparable](t *testing.T, got T, expected T) {

@@ -178,3 +178,18 @@ func CountBy[Element any](elements []Element, fun func(Element) bool) int {
 		return accumulator
 	}, 0)
 }
+
+// Frequencies returns a map with keys as unique elements and values as the count of every element.
+func Frequencies[Element comparable](elements []Element) map[Element]int {
+	return FrequenciesBy(elements, func(element Element) Element {
+		return element
+	})
+}
+
+// FrequenciesBy returns a map with keys as unique elements given by key_fun and values as the count of every element.
+func FrequenciesBy[Element any, Key comparable](elements []Element, fun func(Element) Key) map[Key]int {
+	return Reduce(elements, func(element Element, accumulator map[Key]int) map[Key]int {
+		accumulator[fun(element)]++
+		return accumulator
+	}, make(map[Key]int))
+}
