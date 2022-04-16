@@ -162,14 +162,14 @@ func All[Element any](elements []Element, fun func(Element) bool) bool {
 	}, false)
 }
 
-// Count counts number of elements in slice.
+// Count counts the number of elements in slice.
 func Count[Element any](elements []Element) int {
 	return CountBy(elements, func(element Element) bool {
 		return true
 	})
 }
 
-// CountBy counts number of elements in slice where fun returns true.
+// CountBy counts the number of elements in slice where fun returns true.
 func CountBy[Element any](elements []Element, fun func(Element) bool) int {
 	return Reduce(elements, func(element Element, accumulator int) int {
 		if fun(element) {
