@@ -87,6 +87,16 @@ func Min[Element constraints.Ordered](elements []Element) Element {
 	}, elements[0])
 }
 
+// MinBy returns the minimum element in the slice according to fun.
+func MinBy[Element any, CompareBy constraints.Ordered](elements []Element, fun func(Element) CompareBy) Element {
+	return Reduce(elements, func(element Element, min Element) Element {
+		if fun(element) < fun(min) {
+			min = element
+		}
+		return min
+	}, elements[0])
+}
+
 type minMax[Element constraints.Ordered] struct {
 	min Element
 	max Element

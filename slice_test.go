@@ -67,6 +67,23 @@ func TestMin(t *testing.T) {
 	assert(t, slice.Min(numbers), 1)
 }
 
+type planet struct {
+	Name   string
+	Radius int
+}
+
+func TestMinBy(t *testing.T) {
+	mars := planet{Name: "Mars", Radius: 3_389_500}
+	jupiter := planet{Name: "Jupiter", Radius: 69_911_000}
+	neptune := planet{Name: "Neptune", Radius: 24_622_000}
+
+	planets := []planet{neptune, mars, jupiter}
+	minPlanet := slice.MinBy(planets, func(planet planet) int {
+		return planet.Radius
+	})
+	assert(t, minPlanet.Name, mars.Name)
+}
+
 func TestMinMax(t *testing.T) {
 	numbers := []int{6, 4, 8, 2, 1, 9, 4, 7, 5}
 	min, max := slice.MinMax(numbers)
