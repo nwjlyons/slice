@@ -113,3 +113,13 @@ func Sum[Element constraints.Ordered](elements []Element) Element {
 		return element + accumulator
 	}, elements[0])
 }
+
+// Any returns true if fun returns true for at least one element in slice.
+func Any[Element any](elements []Element, fun func(element Element) bool) bool {
+	return Reduce(elements, func(element Element, accumulator bool) bool {
+		if fun(element) {
+			accumulator = true
+		}
+		return accumulator
+	}, false)
+}

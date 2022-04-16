@@ -79,6 +79,14 @@ func TestSum(t *testing.T) {
 	assert(t, slice.Sum(numbers), 46)
 }
 
+func TestAny(t *testing.T) {
+	isEven := func(number int) bool {
+		return number%2 == 0
+	}
+	assert(t, slice.Any([]int{1, 3, 5, 7, 9}, isEven), false)
+	assert(t, slice.Any([]int{1, 3, 2, 7, 9}, isEven), true)
+}
+
 func assert[T comparable](t *testing.T, got T, expected T) {
 	if got != expected {
 		t.Errorf("got:\n%v\nexpected:\n%v\n", got, expected)
