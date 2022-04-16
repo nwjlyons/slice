@@ -11,7 +11,7 @@ const (
 	Halt
 )
 
-// ReduceWhile reduces slice until fun returns Halt.
+// ReduceWhile invokes fun on each element in the slice with the accumulator until Halt is returned.
 func ReduceWhile[Element any, Accumulator any](elements []Element, fun func(Element, Accumulator) (Reduction, Accumulator), accumulator Accumulator) Accumulator {
 	reduction := Cont
 	for _, element := range elements {
@@ -23,14 +23,14 @@ func ReduceWhile[Element any, Accumulator any](elements []Element, fun func(Elem
 	return accumulator
 }
 
-// Reduce invokes fun for each element in the slice with the accumulator.
+// Reduce invokes fun on each element in the slice with the accumulator.
 func Reduce[Element any, Accumulator any](elements []Element, fun func(Element, Accumulator) Accumulator, accumulator Accumulator) Accumulator {
 	return ReduceWhile(elements, func(element Element, accumulator Accumulator) (Reduction, Accumulator) {
 		return Cont, fun(element, accumulator)
 	}, accumulator)
 }
 
-// Map invokes fun on each element.
+// Map invokes fun on each element in the slice.
 func Map[Element any](elements []Element, fun func(Element) Element) []Element {
 	return Reduce(elements, func(element Element, accumulator []Element) []Element {
 		return append(accumulator, fun(element))
@@ -129,8 +129,7 @@ func All[Element any](elements []Element, fun func(Element) bool) bool {
 	return ReduceWhile(elements, func(element Element, accumulator bool) (Reduction, bool) {
 		if fun(element) {
 			return Cont, true
-		} else {
-			return Halt, false
 		}
+		return Halt, false
 	}, false)
 }
