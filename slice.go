@@ -38,20 +38,20 @@ func Map[Element any](elements []Element, fun func(Element) Element) []Element {
 }
 
 // Filter returns elements where fun returns true.
-func Filter[Element any](elements []Element, fun func(element Element) bool) []Element {
-	return Reduce(elements, func(elememt Element, accumulator []Element) []Element {
-		if fun(elememt) {
-			return append(accumulator, elememt)
+func Filter[Element any](elements []Element, fun func(Element) bool) []Element {
+	return Reduce(elements, func(element Element, accumulator []Element) []Element {
+		if fun(element) {
+			return append(accumulator, element)
 		}
 		return accumulator
 	}, make([]Element, 0))
 }
 
 // Reject returns elements excluding those where fun returns true.
-func Reject[Element any](elements []Element, fun func(element Element) bool) []Element {
-	return Reduce(elements, func(elememt Element, accumulator []Element) []Element {
-		if !fun(elememt) {
-			return append(accumulator, elememt)
+func Reject[Element any](elements []Element, fun func(Element) bool) []Element {
+	return Reduce(elements, func(element Element, accumulator []Element) []Element {
+		if !fun(element) {
+			return append(accumulator, element)
 		}
 		return accumulator
 	}, make([]Element, 0))
