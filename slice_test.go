@@ -63,9 +63,9 @@ func TestMax(t *testing.T) {
 }
 
 func TestMaxBy(t *testing.T) {
+	neptune := planet{Name: "Neptune", Radius: 24_622_000}
 	mars := planet{Name: "Mars", Radius: 3_389_500}
 	jupiter := planet{Name: "Jupiter", Radius: 69_911_000}
-	neptune := planet{Name: "Neptune", Radius: 24_622_000}
 
 	planets := []planet{neptune, mars, jupiter}
 	maxPlanet := slice.MaxBy(planets, func(planet planet) int {
@@ -85,9 +85,9 @@ type planet struct {
 }
 
 func TestMinBy(t *testing.T) {
+	neptune := planet{Name: "Neptune", Radius: 24_622_000}
 	mars := planet{Name: "Mars", Radius: 3_389_500}
 	jupiter := planet{Name: "Jupiter", Radius: 69_911_000}
-	neptune := planet{Name: "Neptune", Radius: 24_622_000}
 
 	planets := []planet{neptune, mars, jupiter}
 	minPlanet := slice.MinBy(planets, func(planet planet) int {
@@ -101,6 +101,19 @@ func TestMinMax(t *testing.T) {
 	min, max := slice.MinMax(numbers)
 	assert(t, min, 1)
 	assert(t, max, 9)
+}
+
+func TestMinMaxBy(t *testing.T) {
+	neptune := planet{Name: "Neptune", Radius: 24_622_000}
+	mars := planet{Name: "Mars", Radius: 3_389_500}
+	jupiter := planet{Name: "Jupiter", Radius: 69_911_000}
+
+	planets := []planet{neptune, mars, jupiter}
+	minPlanet, maxPlanent := slice.MinMaxBy(planets, func(planet planet) int {
+		return planet.Radius
+	})
+	assert(t, minPlanet.Name, mars.Name)
+	assert(t, maxPlanent.Name, jupiter.Name)
 }
 
 func TestSum(t *testing.T) {
