@@ -78,6 +78,14 @@ func FrequenciesBy[Element any, Key comparable](elements []Element, fun func(Ele
 	}, make(map[Key]int))
 }
 
+// GroupBy splits the slice into groups based on key_fun.
+func GroupBy[Element any, GroupBy comparable](elements []Element, fun func(element Element) GroupBy) map[GroupBy][]Element {
+	return Reduce(elements, func(element Element, accumulator map[GroupBy][]Element) map[GroupBy][]Element {
+		accumulator[fun(element)] = append(accumulator[fun(element)], element)
+		return accumulator
+	}, make(map[GroupBy][]Element))
+}
+
 // IsMember checks if element exists in the slice.
 func IsMember[Element comparable](elements []Element, member Element) bool {
 	return ReduceWhile(elements, func(element Element, accumulator bool) (Reduction, bool) {

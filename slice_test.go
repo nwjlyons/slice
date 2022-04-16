@@ -1,6 +1,7 @@
 package slice_test
 
 import (
+	"fmt"
 	"github.com/nwjlyons/slice"
 	"reflect"
 	"strings"
@@ -61,6 +62,16 @@ func TestFrequenciesBy(t *testing.T) {
 	})
 	expected := map[string]int{"aa": 2, "bb": 1, "cc": 1}
 	assert(t, reflect.DeepEqual(frequencies, expected), true)
+}
+
+func TestGroupBy(t *testing.T) {
+	planets := []string{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"}
+	expected := map[int][]string{7: {"Mercury", "Jupiter", "Neptune"}, 6: {"Saturn", "Uranus"}, 5: {"Venus", "Earth"}, 4: {"Mars"}}
+	got := slice.GroupBy(planets, func(planet string) int {
+		return len(planet)
+	})
+	fmt.Println(got)
+	assert(t, reflect.DeepEqual(got, expected), true)
 }
 
 func TestIsMember(t *testing.T) {
