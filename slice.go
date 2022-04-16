@@ -101,7 +101,7 @@ func MinBy[Element any, CompareBy constraints.Ordered](elements []Element, fun f
 	}, elements[0])
 }
 
-type minMax[Element any] struct {
+type pair[Element any] struct {
 	min Element
 	max Element
 }
@@ -115,7 +115,7 @@ func MinMax[Element constraints.Ordered](elements []Element) (Element, Element) 
 
 // MinMaxBy returns the minimum and maximum element in the slice according to fun.
 func MinMaxBy[Element any, CompareBy constraints.Ordered](elements []Element, fun func(Element) CompareBy) (Element, Element) {
-	result := Reduce(elements, func(element Element, accumulator minMax[Element]) minMax[Element] {
+	result := Reduce(elements, func(element Element, accumulator pair[Element]) pair[Element] {
 		if fun(element) < fun(accumulator.min) {
 			accumulator.min = element
 		}
@@ -123,7 +123,7 @@ func MinMaxBy[Element any, CompareBy constraints.Ordered](elements []Element, fu
 			accumulator.max = element
 		}
 		return accumulator
-	}, minMax[Element]{min: elements[0], max: elements[0]})
+	}, pair[Element]{min: elements[0], max: elements[0]})
 
 	return result.min, result.max
 }
