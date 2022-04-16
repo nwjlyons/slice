@@ -121,6 +121,18 @@ func TestSum(t *testing.T) {
 	assert(t, slice.Sum(numbers), 46)
 }
 
+func TestSumBy(t *testing.T) {
+	neptune := planet{Name: "Neptune", Radius: 24_622_000}
+	mars := planet{Name: "Mars", Radius: 3_389_500}
+	jupiter := planet{Name: "Jupiter", Radius: 69_911_000}
+
+	planets := []planet{neptune, mars, jupiter}
+	sum := slice.SumBy(planets, func(planet planet) int {
+		return planet.Radius
+	})
+	assert(t, sum, mars.Radius+jupiter.Radius+neptune.Radius)
+}
+
 func TestAny(t *testing.T) {
 	isEven := func(number int) bool {
 		return number%2 == 0

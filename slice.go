@@ -130,9 +130,16 @@ func MinMaxBy[Element any, CompareBy constraints.Ordered](elements []Element, fu
 
 // Sum returns the sum of all elements.
 func Sum[Element constraints.Ordered](elements []Element) Element {
-	return Reduce(elements[1:], func(element Element, accumulator Element) Element {
-		return element + accumulator
-	}, elements[0])
+	return SumBy(elements, func(element Element) Element {
+		return element
+	})
+}
+
+// SumBy returns the sum of all elements according to fun.
+func SumBy[Element any, SumBy constraints.Ordered](elements []Element, fun func(Element) SumBy) SumBy {
+	return Reduce(elements[1:], func(element Element, accumulator SumBy) SumBy {
+		return fun(element) + accumulator
+	}, fun(elements[0]))
 }
 
 // Any returns true if fun returns true for at least one element in the slice.
