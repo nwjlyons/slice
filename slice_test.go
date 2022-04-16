@@ -1,8 +1,8 @@
 package slice_test
 
 import (
+	"github.com/nwjlyons/slice"
 	"reflect"
-	"slice"
 	"strings"
 	"testing"
 )

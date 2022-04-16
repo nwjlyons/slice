@@ -1,4 +1,4 @@
-module slice
+module github.com/nwjlyons/slice
 
 go 1.18
 
