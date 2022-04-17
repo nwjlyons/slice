@@ -87,7 +87,7 @@ func FrequenciesBy[Element any, Key comparable](elements []Element, fun func(Ele
 }
 
 // GroupBy splits the slice into groups based on key_fun.
-func GroupBy[Element any, GroupBy comparable](elements []Element, fun func(element Element) GroupBy) map[GroupBy][]Element {
+func GroupBy[Element any, GroupBy comparable](elements []Element, fun func(Element) GroupBy) map[GroupBy][]Element {
 	return Reduce(elements, func(element Element, accumulator map[GroupBy][]Element) map[GroupBy][]Element {
 		accumulator[fun(element)] = append(accumulator[fun(element)], element)
 		return accumulator
