@@ -12,8 +12,8 @@ const (
 )
 
 type pair[Element any] struct {
-	min Element
-	max Element
+	left  Element
+	right Element
 }
 
 // All returns true if fun returns true for all elements in the slice.
@@ -147,16 +147,16 @@ func MinMax[Element constraints.Ordered](elements []Element) (Element, Element) 
 // MinMaxBy returns the minimum and maximum element in the slice according to fun.
 func MinMaxBy[Element any, CompareBy constraints.Ordered](elements []Element, fun func(Element) CompareBy) (Element, Element) {
 	result := Reduce(elements, func(element Element, accumulator pair[Element]) pair[Element] {
-		if fun(element) < fun(accumulator.min) {
-			accumulator.min = element
+		if fun(element) < fun(accumulator.left) {
+			accumulator.left = element
 		}
-		if fun(element) > fun(accumulator.max) {
-			accumulator.max = element
+		if fun(element) > fun(accumulator.right) {
+			accumulator.right = element
 		}
 		return accumulator
-	}, pair[Element]{min: elements[0], max: elements[0]})
+	}, pair[Element]{left: elements[0], right: elements[0]})
 
-	return result.min, result.max
+	return result.left, result.right
 }
 
 // Reduce invokes fun on each element in the slice with the accumulator.
@@ -186,6 +186,19 @@ func Reject[Element any](elements []Element, fun func(Element) bool) []Element {
 		}
 		return accumulator
 	}, make([]Element, 0))
+}
+
+// SplitWith splits the slice in two lists according to the given function fun.
+func SplitWith[Element any](elements []Element, fun func(Element) bool) ([]Element, []Element) {
+	result := Reduce(elements, func(element Element, accumulator pair[[]Element]) pair[[]Element] {
+		if fun(element) {
+			accumulator.left = append(accumulator.left, element)
+		} else {
+			accumulator.right = append(accumulator.right, element)
+		}
+		return accumulator
+	}, pair[[]Element]{})
+	return result.left, result.right
 }
 
 // Sum returns the sum of all elements.
