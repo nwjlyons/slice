@@ -42,6 +42,11 @@ func TestCountBy(t *testing.T) {
 	assert(t, slice.CountBy(numbers, isEven), 4)
 }
 
+func TestEach(t *testing.T) {
+	countdown := []string{"3", "2", "1", "Go!"}
+	slice.Each(countdown, func(tick string) { fmt.Println(tick) })
+}
+
 func TestFilter(t *testing.T) {
 	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	got := slice.Filter(numbers, func(number int) bool {

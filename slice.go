@@ -53,6 +53,14 @@ func CountBy[Element any](elements []Element, fun func(Element) bool) int {
 	}, 0)
 }
 
+// Each invokes fun on each element in the slice.
+func Each[Element any](elements []Element, fun func(Element)) {
+	Reduce(elements, func(element Element, accumulator bool) bool {
+		fun(element)
+		return accumulator
+	}, false)
+}
+
 // Filter returns elements where fun returns true.
 func Filter[Element any](elements []Element, fun func(Element) bool) []Element {
 	return Reduce(elements, func(element Element, accumulator []Element) []Element {
