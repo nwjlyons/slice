@@ -196,6 +196,13 @@ func Reject[Element any](elements []Element, fun func(Element) bool) []Element {
 	}, make([]Element, 0))
 }
 
+// Reverse returns a slice of elements in reverse order.
+func Reverse[Element comparable](elements []Element) []Element {
+	return Reduce(elements, func(element Element, accumulator []Element) []Element {
+		return append([]Element{element}, accumulator...)
+	}, make([]Element, 0))
+}
+
 // SplitWhile splits the slice in two at the position of the element for which fun returns a false for the first time.
 func SplitWhile[Element any](elements []Element, fun func(Element) bool) ([]Element, []Element) {
 	addToLeft := true

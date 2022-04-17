@@ -76,7 +76,6 @@ func TestGroupBy(t *testing.T) {
 	got := slice.GroupBy(planets, func(planet string) int {
 		return len(planet)
 	})
-	fmt.Println(got)
 	assert(t, reflect.DeepEqual(got, expected), true)
 }
 
@@ -181,6 +180,12 @@ func TestReject(t *testing.T) {
 		return number%2 == 0
 	})
 	assert(t, reflect.DeepEqual(got, []int{1, 3, 5, 7, 9}), true)
+}
+
+func TestReverse(t *testing.T) {
+	planets := []string{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"}
+	expected := []string{"Neptune", "Uranus", "Saturn", "Jupiter", "Mars", "Earth", "Venus", "Mercury"}
+	assert(t, reflect.DeepEqual(slice.Reverse(planets), expected), true)
 }
 
 func TestSplitWhile(t *testing.T) {
