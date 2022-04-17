@@ -2,6 +2,7 @@ package slice
 
 import (
 	"golang.org/x/exp/constraints"
+	"sort"
 )
 
 type Reduction int
@@ -9,6 +10,13 @@ type Reduction int
 const (
 	Cont Reduction = iota
 	Halt
+)
+
+type Sort int
+
+const (
+	Asc Sort = iota
+	Desc
 )
 
 type pair[Element any] struct {
@@ -201,6 +209,19 @@ func Reverse[Element comparable](elements []Element) []Element {
 	return Reduce(elements, func(element Element, accumulator []Element) []Element {
 		return append([]Element{element}, accumulator...)
 	}, make([]Element, 0))
+}
+
+// SortBy returns a slice sorted according to fun.
+func SortBy[Element any, SortBy constraints.Ordered](elements []Element, fun func(Element) SortBy, order Sort) []Element {
+	sortedElements := make([]Element, len(elements))
+	copy(sortedElements, elements)
+	sort.Slice(sortedElements, func(i, j int) bool {
+		if order == Asc {
+			return fun(sortedElements[i]) < fun(sortedElements[j])
+		}
+		return fun(sortedElements[i]) > fun(sortedElements[j])
+	})
+	return sortedElements
 }
 
 // SplitWhile splits the slice in two at the position of the element for which fun returns a false for the first time.

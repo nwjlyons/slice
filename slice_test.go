@@ -188,6 +188,22 @@ func TestReverse(t *testing.T) {
 	assert(t, reflect.DeepEqual(slice.Reverse(planets), expected), true)
 }
 
+func TestSortBy(t *testing.T) {
+	neptune := planet{Name: "Neptune", Radius: 24_622_000}
+	mars := planet{Name: "Mars", Radius: 3_389_500}
+	jupiter := planet{Name: "Jupiter", Radius: 69_911_000}
+
+	planets := []planet{neptune, mars, jupiter}
+
+	assert(t, reflect.DeepEqual(slice.SortBy(planets, func(planet planet) int {
+		return planet.Radius
+	}, slice.Asc), []planet{mars, neptune, jupiter}), true)
+
+	assert(t, reflect.DeepEqual(slice.SortBy(planets, func(planet planet) int {
+		return planet.Radius
+	}, slice.Desc), []planet{jupiter, neptune, mars}), true)
+}
+
 func TestSplitWhile(t *testing.T) {
 	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	left, right := slice.SplitWhile(numbers, func(number int) bool {
