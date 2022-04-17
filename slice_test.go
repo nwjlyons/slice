@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/nwjlyons/slice"
 	"reflect"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -92,6 +93,12 @@ func TestMap(t *testing.T) {
 	})
 	expected := []string{"red!", "amber!", "green!"}
 	assert(t, reflect.DeepEqual(got, expected), true)
+
+	numbers := []int{1, 2, 3}
+	numbersAsStrings := slice.Map(numbers, func(number int) string {
+		return strconv.Itoa(number)
+	})
+	assert(t, reflect.DeepEqual(numbersAsStrings, []string{"1", "2", "3"}), true)
 }
 
 func TestMax(t *testing.T) {

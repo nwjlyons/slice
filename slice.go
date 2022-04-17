@@ -105,10 +105,10 @@ func IsMember[Element comparable](elements []Element, member Element) bool {
 }
 
 // Map invokes fun on each element in the slice.
-func Map[Element any](elements []Element, fun func(Element) Element) []Element {
-	return Reduce(elements, func(element Element, accumulator []Element) []Element {
+func Map[Element any, ReturnElement any](elements []Element, fun func(Element) ReturnElement) []ReturnElement {
+	return Reduce(elements, func(element Element, accumulator []ReturnElement) []ReturnElement {
 		return append(accumulator, fun(element))
-	}, make([]Element, 0))
+	}, make([]ReturnElement, 0))
 }
 
 // Max returns the maximum element in the slice.
