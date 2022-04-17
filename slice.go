@@ -196,6 +196,25 @@ func Reject[Element any](elements []Element, fun func(Element) bool) []Element {
 	}, make([]Element, 0))
 }
 
+// SplitWhile splits the slice in two at the position of the element for which fun returns a false for the first time.
+func SplitWhile[Element any](elements []Element, fun func(Element) bool) ([]Element, []Element) {
+	addToLeft := true
+	result := Reduce(elements, func(element Element, accumulator pair[[]Element]) pair[[]Element] {
+
+		if addToLeft == true && fun(element) == false {
+			addToLeft = false
+		}
+
+		if addToLeft {
+			accumulator.left = append(accumulator.left, element)
+		} else {
+			accumulator.right = append(accumulator.right, element)
+		}
+		return accumulator
+	}, pair[[]Element]{})
+	return result.left, result.right
+}
+
 // SplitWith splits the slice in two lists according to the given function fun.
 func SplitWith[Element any](elements []Element, fun func(Element) bool) ([]Element, []Element) {
 	result := Reduce(elements, func(element Element, accumulator pair[[]Element]) pair[[]Element] {

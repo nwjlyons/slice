@@ -183,13 +183,22 @@ func TestReject(t *testing.T) {
 	assert(t, reflect.DeepEqual(got, []int{1, 3, 5, 7, 9}), true)
 }
 
+func TestSplitWhile(t *testing.T) {
+	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	left, right := slice.SplitWhile(numbers, func(number int) bool {
+		return number <= 5
+	})
+	assert(t, reflect.DeepEqual(left, []int{1, 2, 3, 4, 5}), true)
+	assert(t, reflect.DeepEqual(right, []int{6, 7, 8, 9}), true)
+}
+
 func TestSplitWith(t *testing.T) {
 	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	evenNumbers, oddNumbers := slice.SplitWith(numbers, func(number int) bool {
 		return number%2 == 0
 	})
-	assert(t, reflect.DeepEqual(oddNumbers, []int{1, 3, 5, 7, 9}), true)
 	assert(t, reflect.DeepEqual(evenNumbers, []int{2, 4, 6, 8}), true)
+	assert(t, reflect.DeepEqual(oddNumbers, []int{1, 3, 5, 7, 9}), true)
 }
 
 func TestSum(t *testing.T) {
