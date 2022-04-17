@@ -245,6 +245,13 @@ func TestSumBy(t *testing.T) {
 	assert(t, sum, mars.Radius+jupiter.Radius+neptune.Radius)
 }
 
+func TestTake(t *testing.T) {
+	planets := []string{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"}
+	assert(t, reflect.DeepEqual(slice.Take(planets, 2), []string{"Mercury", "Venus"}), true)
+	assert(t, reflect.DeepEqual(slice.Take(planets, 10), planets), true)
+	assert(t, reflect.DeepEqual(slice.Take(planets, 0), []string{}), true)
+}
+
 func assert[T comparable](t *testing.T, got T, expected T) {
 	if got != expected {
 		t.Errorf("got:\n%v\nexpected:\n%v\n", got, expected)

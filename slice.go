@@ -276,3 +276,14 @@ func SumBy[Element any, SumBy constraints.Ordered](elements []Element, fun func(
 		return fun(element) + accumulator
 	}, fun(elements[0]))
 }
+
+// Take takes an amount of elements from the beginning of the slice.
+func Take[Element any](elements []Element, amount uint) []Element {
+	return ReduceWhile(elements, func(element Element, accumulator []Element) (Reduction, []Element) {
+		if len(accumulator) < int(amount) {
+			accumulator = append(accumulator, element)
+			return Cont, accumulator
+		}
+		return Halt, accumulator
+	}, make([]Element, 0))
+}
