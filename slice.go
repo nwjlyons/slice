@@ -12,10 +12,10 @@ const (
 	Halt
 )
 
-type Sort int
+type Order int
 
 const (
-	Asc Sort = iota
+	Asc Order = iota
 	Desc
 )
 
@@ -211,8 +211,15 @@ func Reverse[Element comparable](elements []Element) []Element {
 	}, make([]Element, 0))
 }
 
+// Sort returns a slice sorted according to fun.
+func Sort[Element constraints.Ordered](elements []Element, order Order) []Element {
+	return SortBy(elements, func(element Element) Element {
+		return element
+	}, order)
+}
+
 // SortBy returns a slice sorted according to fun.
-func SortBy[Element any, SortBy constraints.Ordered](elements []Element, fun func(Element) SortBy, order Sort) []Element {
+func SortBy[Element any, SortBy constraints.Ordered](elements []Element, fun func(Element) SortBy, order Order) []Element {
 	sortedElements := make([]Element, len(elements))
 	copy(sortedElements, elements)
 	sort.Slice(sortedElements, func(i, j int) bool {
