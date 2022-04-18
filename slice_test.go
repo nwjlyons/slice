@@ -257,6 +257,11 @@ func TestTake(t *testing.T) {
 	assertEqual(t, slice.Take(planets, 0), []string{})
 }
 
+func TestUniq(t *testing.T) {
+	moves := []string{"Up", "Down", "Up", "Up", "Down", "Left", "Right", "Right", "Right", "Left"}
+	assertEqual(t, slice.Uniq(moves), []string{"Up", "Down", "Left", "Right"})
+}
+
 func assertEqual[T any](t *testing.T, got T, expected T) {
 	if !reflect.DeepEqual(got, expected) {
 		t.Errorf("\n     got: %v\nexpected: %v\n", got, expected)

@@ -291,3 +291,13 @@ func Take[Element any](elements []Element, amount uint) []Element {
 		return Halt, accumulator
 	}, make([]Element, 0))
 }
+
+// Uniq iterates over the slice, removing all duplicated elements.
+func Uniq[Element comparable](elements []Element) []Element {
+	return Reduce(elements, func(element Element, accumulator []Element) []Element {
+		if !IsMember(accumulator, element) {
+			accumulator = append(accumulator, element)
+		}
+		return accumulator
+	}, make([]Element, 0))
+}
