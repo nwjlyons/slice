@@ -314,6 +314,16 @@ func Take[Element any](elements []Element, amount uint) []Element {
 	}, make([]Element, 0))
 }
 
+// TakeWhile takes the elements from the beginning of the slice while fun returns a truthy value.
+func TakeWhile[Element any](elements []Element, fun func(Element) bool) []Element {
+	return ReduceWhile(elements, func(element Element, accumulator []Element) (Reduction, []Element) {
+		if fun(element) {
+			return Cont, append(accumulator, element)
+		}
+		return Halt, accumulator
+	}, make([]Element, 0))
+}
+
 // Uniq iterates over the slice, removing all duplicated elements.
 func Uniq[Element comparable](elements []Element) []Element {
 	return Reduce(elements, func(element Element, accumulator []Element) []Element {

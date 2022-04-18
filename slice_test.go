@@ -276,6 +276,13 @@ func TestTake(t *testing.T) {
 	assertEqual(t, slice.Take(planets, 0), []string{})
 }
 
+func TestTakeWhile(t *testing.T) {
+	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	assertEqual(t, slice.TakeWhile(numbers, func(number int) bool {
+		return number <= 5
+	}), []int{1, 2, 3, 4, 5})
+}
+
 func TestUniq(t *testing.T) {
 	moves := []string{"Up", "Down", "Up", "Up", "Down", "Left", "Right", "Right", "Right", "Left"}
 	assertEqual(t, slice.Uniq(moves), []string{"Up", "Down", "Left", "Right"})
