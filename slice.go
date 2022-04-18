@@ -2,6 +2,7 @@ package slice
 
 import (
 	"golang.org/x/exp/constraints"
+	"math/rand"
 	"sort"
 )
 
@@ -171,6 +172,11 @@ func MinMaxBy[Element any, CompareBy constraints.Ordered](elements []Element, fu
 	}, pair[Element]{left: elements[0], right: elements[0]})
 
 	return result.left, result.right
+}
+
+// Random returns a random element from the slice.
+func Random[Element any](elements []Element) Element {
+	return elements[rand.Intn(len(elements))]
 }
 
 // Reduce invokes fun on each element in the slice with the accumulator.
