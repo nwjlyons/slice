@@ -46,9 +46,7 @@ func Any[Element any](elements []Element, fun func(Element) bool) bool {
 
 // Count counts the number of elements in the slice.
 func Count[Element any](elements []Element) int {
-	return CountBy(elements, func(element Element) bool {
-		return true
-	})
+	return len(elements)
 }
 
 // CountBy counts the number of elements in slice where fun returns true.
