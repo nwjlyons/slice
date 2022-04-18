@@ -85,6 +85,18 @@ func TestIsMember(t *testing.T) {
 	assertEqual(t, slice.IsMember(planets, "Pluto"), false)
 }
 
+func TestIsMemberBy(t *testing.T) {
+	neptune := planet{Name: "Neptune", Radius: 24_622_000}
+	neptuneWithDifferentRadius := planet{Name: "Neptune", Radius: 42_000}
+	mars := planet{Name: "Mars", Radius: 3_389_500}
+	jupiter := planet{Name: "Jupiter", Radius: 69_911_000}
+	planets := []planet{neptune, mars, jupiter}
+
+	assertEqual(t, slice.IsMemberBy(planets, neptuneWithDifferentRadius, func(planet planet) string {
+		return planet.Name
+	}), true)
+}
+
 func TestMap(t *testing.T) {
 	trafficLights := []string{"red", "amber", "green"}
 	got := slice.Map(trafficLights, func(light string) string {
@@ -260,6 +272,17 @@ func TestTake(t *testing.T) {
 func TestUniq(t *testing.T) {
 	moves := []string{"Up", "Down", "Up", "Up", "Down", "Left", "Right", "Right", "Right", "Left"}
 	assertEqual(t, slice.Uniq(moves), []string{"Up", "Down", "Left", "Right"})
+}
+
+func TestUniqBy(t *testing.T) {
+	neptune := planet{Name: "Neptune", Radius: 24_622_000}
+	mars := planet{Name: "Mars", Radius: 3_389_500}
+	sameRadiusAsMars := planet{Name: "Same Radius as Mars", Radius: 3_389_500}
+
+	planets := []planet{mars, neptune, sameRadiusAsMars}
+	assertEqual(t, slice.UniqBy(planets, func(planet planet) int {
+		return planet.Radius
+	}), []planet{mars, neptune})
 }
 
 func assertEqual[T any](t *testing.T, got T, expected T) {

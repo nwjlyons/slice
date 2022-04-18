@@ -103,8 +103,15 @@ func GroupBy[Element any, GroupBy comparable](elements []Element, fun func(Eleme
 
 // IsMember checks if element exists in the slice.
 func IsMember[Element comparable](elements []Element, member Element) bool {
+	return IsMemberBy(elements, member, func(element Element) Element {
+		return element
+	})
+}
+
+// IsMemberBy checks if element exists in the slice according to fun.
+func IsMemberBy[Element any, IsMemberBy comparable](elements []Element, member Element, fun func(Element) IsMemberBy) bool {
 	return ReduceWhile(elements, func(element Element, accumulator bool) (Reduction, bool) {
-		if element == member {
+		if fun(element) == fun(member) {
 			return Halt, true
 		}
 		return Cont, false
@@ -296,6 +303,16 @@ func Take[Element any](elements []Element, amount uint) []Element {
 func Uniq[Element comparable](elements []Element) []Element {
 	return Reduce(elements, func(element Element, accumulator []Element) []Element {
 		if !IsMember(accumulator, element) {
+			accumulator = append(accumulator, element)
+		}
+		return accumulator
+	}, make([]Element, 0))
+}
+
+// UniqBy iterates over the slice, removing all duplicated elements according to fun.
+func UniqBy[Element any, UniqBy comparable](elements []Element, fun func(Element) UniqBy) []Element {
+	return Reduce(elements, func(element Element, accumulator []Element) []Element {
+		if !IsMemberBy(accumulator, element, fun) {
 			accumulator = append(accumulator, element)
 		}
 		return accumulator
