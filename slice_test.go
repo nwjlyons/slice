@@ -56,6 +56,13 @@ func TestFilter(t *testing.T) {
 	assertEqual(t, got, []int{2, 4, 6, 8})
 }
 
+func TestFlatMap(t *testing.T) {
+	numbers := []int{1, 2, 3}
+	assertEqual(t, slice.FlatMap(numbers, func(number int) []int {
+		return []int{number, number}
+	}), []int{1, 1, 2, 2, 3, 3})
+}
+
 func TestFrequencies(t *testing.T) {
 	frequencies := slice.Frequencies([]string{"aa", "aa", "bb", "cc"})
 	expected := map[string]int{"aa": 2, "bb": 1, "cc": 1}

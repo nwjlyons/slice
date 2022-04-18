@@ -79,6 +79,13 @@ func Filter[Element any](elements []Element, fun func(Element) bool) []Element {
 	}, make([]Element, 0))
 }
 
+// FlatMap maps the given fun over slice and flattens the result.
+func FlatMap[Element any](elements []Element, fun func(Element) []Element) []Element {
+	return Reduce(elements, func(element Element, accumulator []Element) []Element {
+		return append(accumulator, fun(element)...)
+	}, make([]Element, 0))
+}
+
 // Frequencies returns a map with keys as unique elements and values as the count of every element.
 func Frequencies[Element comparable](elements []Element) map[Element]int {
 	return FrequenciesBy(elements, func(element Element) Element {
