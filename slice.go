@@ -4,6 +4,7 @@ import (
 	"golang.org/x/exp/constraints"
 	"math/rand"
 	"sort"
+	"time"
 )
 
 type Reduction int
@@ -182,7 +183,14 @@ func MinMaxBy[Element any, CompareBy constraints.Ordered](elements []Element, fu
 }
 
 // Random returns a random element from the slice.
-func Random[Element any](elements []Element) Element {
+func Random[Element any](elements []Element, seed ...int64) Element {
+	if len(seed) == 0 {
+		rand.Seed(time.Now().UTC().UnixNano())
+	} else if len(seed) == 1 {
+		rand.Seed(seed[0])
+	} else {
+		panic("unexpected value for seed parameter")
+	}
 	return elements[rand.Intn(len(elements))]
 }
 

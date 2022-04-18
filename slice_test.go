@@ -168,7 +168,7 @@ func TestMinMaxBy(t *testing.T) {
 
 func TestRandom(t *testing.T) {
 	planets := []string{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"}
-	assertEqual(t, slice.IsMember(planets, slice.Random(planets)), true)
+	assertEqual(t, slice.Random(planets, 42), "Venus")
 }
 
 func TestReduce(t *testing.T) {
