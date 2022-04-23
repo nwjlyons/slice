@@ -227,6 +227,11 @@ func TestReverse(t *testing.T) {
 	assertEqual(t, slice.Reverse(planets), expected)
 }
 
+func TestShuffle(t *testing.T) {
+	planets := []string{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"}
+	assertEqual(t, slice.Shuffle(planets, 42), []string{"Saturn", "Neptune", "Jupiter", "Uranus", "Venus", "Mars", "Mercury", "Earth"})
+}
+
 func TestSort(t *testing.T) {
 	numbers := []int{5, 6, 1, 3, 7, 8, 2, 4, 9}
 	assertEqual(t, slice.Sort(numbers, slice.Asc), []int{1, 2, 3, 4, 5, 6, 7, 8, 9})

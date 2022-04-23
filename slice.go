@@ -255,6 +255,23 @@ func Reverse[Element comparable](elements []Element) []Element {
 	}, make([]Element, 0))
 }
 
+// Shuffle returns a list with the elements of the slice shuffled.
+func Shuffle[Element any](elements []Element, seed ...int64) []Element {
+	if len(seed) == 0 {
+		rand.Seed(time.Now().UTC().UnixNano())
+	} else if len(seed) == 1 {
+		rand.Seed(seed[0])
+	} else {
+		panic("unexpected value for seed parameter")
+	}
+	shuffledElements := make([]Element, len(elements))
+	copy(shuffledElements, elements)
+	rand.Shuffle(len(elements), func(i, j int) {
+		shuffledElements[i], shuffledElements[j] = shuffledElements[j], shuffledElements[i]
+	})
+	return shuffledElements
+}
+
 // Sort returns a slice sorted according to fun.
 func Sort[Element constraints.Ordered](elements []Element, order Order) []Element {
 	return SortBy(elements, func(element Element) Element {
