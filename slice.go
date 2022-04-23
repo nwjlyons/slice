@@ -144,13 +144,6 @@ func Max[Element constraints.Ordered](elements []Element) Element {
 	})
 }
 
-// Product returns the product of all elements.
-func Product[Element Number](elements []Element) Element {
-	return Reduce(elements[1:], func(element Element, accumulator Element) Element {
-		return element * accumulator
-	}, elements[0])
-}
-
 // MaxBy returns the maximum element in the slice according to fun.
 func MaxBy[Element any, CompareBy constraints.Ordered](elements []Element, fun func(Element) CompareBy) Element {
 	return Reduce(elements, func(element Element, max Element) Element {
@@ -198,6 +191,20 @@ func MinMaxBy[Element any, CompareBy constraints.Ordered](elements []Element, fu
 	}, pair[Element]{left: elements[0], right: elements[0]})
 
 	return result.left, result.right
+}
+
+// Product returns the product of all elements.
+func Product[Element Number](elements []Element) Element {
+	return ProductBy(elements, func(element Element) Element {
+		return element
+	})
+}
+
+// ProductBy returns the product of all elements according to fun.
+func ProductBy[Element any, Product Number](elements []Element, fun func(Element) Product) Product {
+	return Reduce(elements[1:], func(element Element, accumulator Product) Product {
+		return fun(element) * accumulator
+	}, fun(elements[0]))
 }
 
 // Random returns a random element from the slice.

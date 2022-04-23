@@ -179,6 +179,15 @@ func TestProduct(t *testing.T) {
 	assertEqual(t, slice.Product([]int{42}), 42)
 }
 
+func TestProductBy(t *testing.T) {
+	neptune := planet{Name: "Neptune", Radius: 2}
+	mars := planet{Name: "Mars", Radius: 3}
+	jupiter := planet{Name: "Jupiter", Radius: 4}
+	assertEqual(t, slice.ProductBy([]planet{neptune, mars, jupiter}, func(planet planet) int {
+		return planet.Radius
+	}), 24)
+}
+
 func TestRandom(t *testing.T) {
 	planets := []string{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"}
 	assertEqual(t, slice.Random(planets, 42), "Venus")
