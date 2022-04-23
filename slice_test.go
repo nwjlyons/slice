@@ -173,6 +173,12 @@ func TestMinMaxBy(t *testing.T) {
 	assertEqual(t, maxPlanet.Name, jupiter.Name)
 }
 
+func TestProduct(t *testing.T) {
+	assertEqual(t, slice.Product([]int{2, 3, 4}), 24)
+	assertEqual(t, slice.Product([]int{2.0, 3.0, 4.0}), 24.0)
+	assertEqual(t, slice.Product([]int{42}), 42)
+}
+
 func TestRandom(t *testing.T) {
 	planets := []string{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"}
 	assertEqual(t, slice.Random(planets, 42), "Venus")

@@ -26,6 +26,10 @@ type pair[Element any] struct {
 	right Element
 }
 
+type Number interface {
+	constraints.Integer | constraints.Float
+}
+
 // All returns true if fun returns true for all elements in the slice.
 func All[Element any](elements []Element, fun func(Element) bool) bool {
 	return ReduceWhile(elements, func(element Element, accumulator bool) (Reduction, bool) {
@@ -138,6 +142,13 @@ func Max[Element constraints.Ordered](elements []Element) Element {
 	return MaxBy(elements, func(element Element) Element {
 		return element
 	})
+}
+
+// Product returns the product of all elements.
+func Product[Element Number](elements []Element) Element {
+	return Reduce(elements[1:], func(element Element, accumulator Element) Element {
+		return element * accumulator
+	}, elements[0])
 }
 
 // MaxBy returns the maximum element in the slice according to fun.
