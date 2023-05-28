@@ -1,10 +1,11 @@
 package slice
 
 import (
-	"golang.org/x/exp/constraints"
 	"math/rand"
 	"sort"
 	"time"
+
+	"golang.org/x/exp/constraints"
 )
 
 type Reduction int
@@ -48,6 +49,15 @@ func Any[Element any](elements []Element, fun func(Element) bool) bool {
 		}
 		return Cont, false
 	}, false)
+}
+
+// At finds the element at the given index (zero-based).
+func At[Element any](elements []Element, index int, defaultValue Element) Element {
+	if index >= 0 && index < len(elements) {
+		return elements[index]
+	} else {
+		return defaultValue
+	}
 }
 
 // Count counts the number of elements in the slice.

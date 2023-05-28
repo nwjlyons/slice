@@ -2,11 +2,12 @@ package slice_test
 
 import (
 	"fmt"
-	"github.com/nwjlyons/slice"
 	"reflect"
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/nwjlyons/slice"
 )
 
 type planet struct {
@@ -28,6 +29,12 @@ func TestAny(t *testing.T) {
 	}
 	assertEqual(t, slice.Any([]int{1, 3, 5, 7, 9}, isEven), false)
 	assertEqual(t, slice.Any([]int{1, 3, 2, 7, 9}, isEven), true)
+}
+
+func TestAt(t *testing.T) {
+	colours := []string{"Cyan", "Magenta", "Yellow"}
+	assertEqual(t, slice.At(colours, 1, "Black"), "Magenta")
+	assertEqual(t, slice.At(colours, 10, "Black"), "Black")
 }
 
 func TestCount(t *testing.T) {
