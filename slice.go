@@ -60,6 +60,11 @@ func At[Element any](elements []Element, index int, defaultValue Element) Elemen
 	}
 }
 
+// Concat concatenates the enumerable on the right with the enumerable on the left.
+func Concat[Element any](left []Element, right []Element) []Element {
+	return append(left, right...)
+}
+
 // Count counts the number of elements in the slice.
 func Count[Element any](elements []Element) int {
 	return len(elements)

@@ -37,6 +37,11 @@ func TestAt(t *testing.T) {
 	assertEqual(t, slice.At(colours, 10, "Black"), "Black")
 }
 
+func TestConcat(t *testing.T) {
+	colours := []string{"Cyan", "Magenta", "Yellow", "Black"}
+	assertEqual(t, slice.Concat([]string{"Cyan", "Magenta"}, []string{"Yellow", "Black"}), colours)
+}
+
 func TestCount(t *testing.T) {
 	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	assertEqual(t, slice.Count(numbers), 9)
